@@ -1,0 +1,43 @@
+version: '3.8'
+x-backend: &backend
+  build: backend
+  restart: unless-stopped
+  depends_on:
+    - postgres
+  volumes:
+    - ./custom-php.ini:/usr/local/etc/php/conf.d/custom-php.ini
+  environment:
+    APP_DEBUG: 'true'
+    APP_KEY: 'base64:d1k91AgNcf1g7t/SVxBwE3u4NFK/I3vMH8Gyzl2Rvrs='
+    DB_CONNECTION: pgsql
+    DB_HOST: postgres
+    DB_PORT: 5432
+    DB_DATABASE: app
+    DB_USERNAME: ${DB_USERNAME}
+    DB_PASSWORD: ${DB_PASSWORD}
+    WAIT_HOSTS: postgres:5432
+    MAIL_MAILER: smtp
+    MAIL_HOST: smtp.yandex.ru
+    MAIL_PORT: 587
+    MAIL_USERNAME: ${MAIL_USERNAME}
+    MAIL_PASSWORD: ${MAIL_PASSWORD}
+    MAIL_ENCRYPTION: tls
+    MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+    MAIL_FROM_NAME: ${MAIL_FROM_NAME}
+    JWT_SECRET: ${JWT_SECRET}
+    QUEUE_CONNECTION: database
+    QUEUE_FAILED_DRIVER: database
+
+services:
+  backend-queue-work:
+    <<: *backend
+    command: sh -c "/wait && php artisan queue:work"
+  backend:
+    <<: *backend
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER:  ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}

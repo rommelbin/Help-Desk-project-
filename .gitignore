@@ -1,0 +1,5 @@
+.idea
+.env
+/backend/vendor
+/backend/storage/
+/backend/public/storage
