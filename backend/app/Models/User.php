@@ -47,7 +47,6 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         $updateRules = [
         'name' => ['sometimes', 'required', 'regex:/^(?=.*[А-Я])(?!.* )[А-ЯЁа-яё\-\']{1,40}$/u'],
         'surname' => ['sometimes', 'required', 'regex:/^(?=.*[А-Я])(?!.* )[А-ЯЁа-яё\-\']{1,40}$/u'],
-        'email' => ['bail', 'sometimes', 'unique:users,email', 'required', 'regex:/^(?!.* )[\dA-Za-z\x20-\x26\x28-\x2F\x3A-\x3F\x5B-\x5F\x7B-\x7E]+@smartworld\.team$/', 'max:100'],
         'password' => ['sometimes', 'required', 'regex:/^(?!.* )(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\dA-Za-z\x20-\x26\x28-\x2F\x3A-\x40\x5B-\x5F\x7B-\x7E]{8,30}$/'],
         'department_id' => ['integer', 'exists:departments,id'],
         'role' => ['string', 'in:Заказчик,Администратор,Исполнитель'],
@@ -60,7 +59,6 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         $confirmRegisterRules = [
         'name' => ['required', 'regex:/^(?=.*[А-Я])(?!.* )[А-ЯЁа-яё\-\']{1,40}$/u'],
         'surname' => ['required', 'regex:/^(?=.*[А-Я])(?!.* )[А-ЯЁа-яё\-\']{1,40}$/u'],
-        'email' => ['bail', 'sometimes', 'exists:users,email', 'required', 'regex:/^(?!.* )[\dA-Za-z\x20-\x26\x28-\x2F\x3A-\x3F\x5B-\x5F\x7B-\x7E]+@smartworld\.team$/', 'max:100'],
         'password' => ['required', 'regex:/^(?!.* )(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\dA-Za-z\x20-\x26\x28-\x2F\x3A-\x40\x5B-\x5F\x7B-\x7E]{8,30}$/'],
         'department_id' => ['integer', 'exists:departments,id']
     ],

@@ -31,7 +31,7 @@ class UserPolicy
 
     public function deleteModel(User $user, User $user_to_delete): bool
     {
-        if (User::find($user_to_delete->id)->email === 'helpdesk@smartworld.team')
+        if (User::find($user_to_delete->id)->email === 'hazleyishero@gmail.com')
             return false;
 
         return Gate::allows('isAdmin');
